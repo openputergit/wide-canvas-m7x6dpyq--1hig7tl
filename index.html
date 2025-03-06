@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AquaPure Hub</title>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e1f5fe 100%);
+        }
+        .water-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+        .water-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <i class="bi bi-droplet-fill text-blue-500 text-2xl"></i>
+                    <span class="ml-2 text-xl font-semibold text-gray-800">AquaPure Hub</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <button id="loginBtn" class="text-blue-500 hover:text-blue-700">Login</button>
+                    <button id="signupBtn" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Auth Forms -->
+        <div id="authForms" class="hidden">
+            <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg p-6 mb-6">
+                <h2 class="text-2xl font-bold mb-4" id="authTitle">Login</h2>
+                <form id="authForm">
+                    <input type="email" placeholder="Email" class="w-full p-2 mb-4 border rounded" required>
+                    <input type="password" placeholder="Password" class="w-full p-2 mb-4 border rounded" required>
+                    <button type="submit" class="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">Submit</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <!-- 1L Bottle -->
+            <div class="water-card rounded-lg p-6 text-center">
+                <i class="bi bi-bottle text-blue-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">1L Bottle</h3>
+                <p class="text-gray-600 mb-4">Pure drinking water</p>
+                <p class="text-blue-500 font-bold mb-4">₹20</p>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Add to Cart</button>
+            </div>
+
+            <!-- 2L Bottle -->
+            <div class="water-card rounded-lg p-6 text-center">
+                <i class="bi bi-bottle text-blue-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">2L Bottle</h3>
+                <p class="text-gray-600 mb-4">Pure drinking water</p>
+                <p class="text-blue-500 font-bold mb-4">₹35</p>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Add to Cart</button>
+            </div>
+
+            <!-- 5L Bottle -->
+            <div class="water-card rounded-lg p-6 text-center">
+                <i class="bi bi-bottle text-blue-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">5L Bottle</h3>
+                <p class="text-gray-600 mb-4">Pure drinking water</p>
+                <p class="text-blue-500 font-bold mb-4">₹75</p>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Add to Cart</button>
+            </div>
+
+            <!-- 20L Bottle -->
+            <div class="water-card rounded-lg p-6 text-center">
+                <i class="bi bi-bottle text-blue-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">20L Bottle</h3>
+                <p class="text-gray-600 mb-4">Pure drinking water</p>
+                <p class="text-blue-500 font-bold mb-4">₹200</p>
+                <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Add to Cart</button>
+            </div>
+        </div>
+
+        <!-- Subscription Plans -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold mb-6 text-center">Subscription Plans</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="water-card rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Weekly Plan</h3>
+                    <ul class="space-y-2 mb-4">
+                        <li><i class="bi bi-check-circle text-green-500"></i> Regular delivery every week</li>
+                        <li><i class="bi bi-check-circle text-green-500"></i> 10% discount on all orders</li>
+                        <li><i class="bi bi-check-circle text-green-500"></i> Free delivery</li>
+                    </ul>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Subscribe</button>
+                </div>
+                <div class="water-card rounded-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4">Monthly Plan</h3>
+                    <ul class="space-y-2 mb-4">
+                        <li><i class="bi bi-check-circle text-green-500"></i> Regular delivery every month</li>
+                        <li><i class="bi bi-check-circle text-green-500"></i> 15% discount on all orders</li>
+                        <li><i class="bi bi-check-circle text-green-500"></i> Free delivery + Priority service</li>
+                    </ul>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 w-full">Subscribe</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Firebase Configuration (Replace with your config)
+        const firebaseConfig = {
+            // Your Firebase config here
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+
+        // Auth UI Toggle
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const authForms = document.getElementById('authForms');
+        const authTitle = document.getElementById('authTitle');
+
+        loginBtn.addEventListener('click', () => {
+            authForms.classList.remove('hidden');
+            authTitle.textContent = 'Login';
+        });
+
+        signupBtn.addEventListener('click', () => {
+            authForms.classList.remove('hidden');
+            authTitle.textContent = 'Sign Up';
+        });
+
+        // Add to Cart functionality would go here
+        const addToCartButtons = document.querySelectorAll('button');
+        addToCartButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                if (e.target.textContent === 'Add to Cart') {
+                    alert('Please login to add items to cart');
+                }
+            });
+        });
+    </script>
+<script>document.body.addEventListener('wheel', e => { if (!e.ctrlKey) return; e.preventDefault(); return }, { passive: false })</script>
+	</body>
+</html>
